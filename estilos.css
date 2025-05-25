@@ -1,0 +1,50 @@
+.top-nav-list li a {
+    color: #111679;
+    font-family: Albert Sans, sans-serif;
+    font-size: medium;
+    text-decoration: none;
+   }
+
+.top-nav-list li {
+  display: inline-block;
+  margin-right: 20px;}
+
+.tycsports {
+  display: block;       /* Hace que el SVG sea un bloque para que margin funcione */
+  margin-left: auto;    /* Márgenes automáticos */
+  margin-right: auto;
+  width: 300px;         /* Tamaño más grande */
+  height: auto;
+}
+
+h1{font-size: 32px;
+  color: #21233e;
+  font-family: Albert Sans, sans-serif;
+}
+
+.main-nav-section {
+  text-align: center;  /* CENTRA horizontalmente los elementos inline/inline-block */
+}
+.main-nav-section h2 {
+  display: inline-block;    /* Para que estén uno al lado del otro */
+  margin-right: 20px;       /* Espacio entre cada uno */
+  font-size: 16px;        /* Ajusta tamaño si querés */
+  font-family: Albert Sans, sans-serif;
+}
+
+.main-nav-section h2 a {
+  color: #111679;
+  text-decoration: none;
+}
+
+article p {
+font-family: Albert Sans, sans-serif;
+color: black;
+font-size: 27,2px;
+}
+
+article h2 {
+    font-family: Albert Sans, sans-serif;
+    color: #21233e;
+}
+
