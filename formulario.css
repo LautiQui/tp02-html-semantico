@@ -1,0 +1,73 @@
+/* Estilos generales para <p> */
+p {
+  font-family: 'Albert Sans', sans-serif;
+  color: #707488;
+}
+
+/* Estilos para la lista de redes sociales */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0; 
+}
+
+ul li {
+  margin-bottom: 10px;
+}
+
+ul li a {
+  color: white;
+  text-decoration: none;
+  font-family: 'Albert Sans', sans-serif;
+  font-weight: bold;
+  background-color: #111679;
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: block;
+  text-align: center;
+}
+
+/* Estilos para etiquetas "Email" y "Contraseña" */
+label {
+  font-family: 'Albert Sans', sans-serif;
+  color: black;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Estilos para inputs */
+input[type="email"],
+input[type="password"] {
+  font-family: 'Albert Sans', sans-serif;
+  color: black;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Estilo para el botón Ingresar */
+button[type="submit"] {
+  font-family: 'Albert Sans', sans-serif;
+  background-color: red;
+  color: white;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: darkred;
+}
+
+/* Estilos para los enlaces del footer del formulario */
+.footer-form p a {
+  color: #707488;
+  text-decoration: none;
+  font-family: 'Albert Sans', sans-serif;
+}
