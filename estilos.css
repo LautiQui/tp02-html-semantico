@@ -123,8 +123,9 @@ footer li a {
   text-decoration: none;
 }
 
+ /*  tablets */
 @media (min-width: 768px) and (max-width: 1024px) {
-  /* Estilos para tablets */
+  
   .top-nav-list li a {
     color: #111679;
     font-family: Albert Sans, sans-serif;
@@ -245,7 +246,7 @@ footer li a {
   }
 }
 
-/* estilos mobile */ 
+/* mobile */ 
 @media (max-width: 767px) {
 
 .top-nav-list li a {
