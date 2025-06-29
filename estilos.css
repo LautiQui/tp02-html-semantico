@@ -1,4 +1,4 @@
-/* === ESTILOS BASE: Mobile First === */
+/*  ESTILOS BASE: Mobile First  */
 
 .top-nav-list li a {
   color: #111679;
@@ -45,6 +45,16 @@ article p {
   font-family: 'Albert Sans', sans-serif;
   color: black;
   font-size: 16px;
+}
+
+.publicidad {
+  background-color: #f7f7f7;
+  color: #333;
+  padding: 50px;
+  text-align: center;
+  font-weight: bold;
+  margin: 20px auto;
+  max-width: 300px;
 }
 
 article h2 {
