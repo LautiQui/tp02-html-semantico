@@ -1,4 +1,4 @@
-/*  BASE: MOBILE FIRST  */
+/* ======== BASE: MOBILE FIRST ======== */
 
 body {
   font-family: 'Albert Sans', sans-serif;
@@ -36,10 +36,17 @@ h1 {
   font-size: 32px;
   color: #21233e;
 }
+/* icono  hamburguesa */
+.hamburger {
+  display: block;
+  font-size: 24px;
+  text-align: center;
+  margin: 10px;
+}
 
 /* Main nav (categorías) */
 .main-nav-section {
-  display: flex;
+  display: none; /* display none para desactivar*/
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
@@ -154,7 +161,7 @@ footer {
 }
 
 
-/* MEDIA QUERY: TABLETS & UP (DESKTOP)*/
+/* ======== MEDIA QUERY: TABLETS & UP (DESKTOP) ======== */
 @media (min-width: 768px) {
 
   .top-nav-list {
@@ -171,7 +178,12 @@ footer {
     width: 300px;
   }
 
+.hamburger {
+    display: none;  /* ocultar hamburguesa en desktop */
+  }
+
   .main-nav-section {
+    display: flex;
     flex-direction: row;
     justify-content: center;
     gap: 20px;
@@ -185,6 +197,7 @@ footer {
     max-width: 1200px;
     margin: 0 auto;
     text-align: left;
+    
   }
 
   .link,
