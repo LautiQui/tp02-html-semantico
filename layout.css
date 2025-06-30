@@ -1,0 +1,55 @@
+@media (min-width: 768px) {
+
+  .top-nav-list {
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .top-nav-list li a {
+    font-size: 16px; /* mejor que medium para control */
+  }
+
+  header .tycsports {
+    width: 300px;
+  }
+
+  .hamburger {
+    display: none;  /* ocultar hamburguesa en desktop */
+  }
+
+  .main-nav-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  /* Footer en horizontal */
+  .footer-wrap {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .link,
+  .footer-nav {
+    width: auto;
+    text-align: left;
+  }
+
+  .footer-nav ul {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 30px;
+    max-width: 200px;
+  }
+
+  .menu-sitios ul.lista-medios li {
+    display: inline-block;
+    margin: 30px 30px 15px 0;
+  }
+}
