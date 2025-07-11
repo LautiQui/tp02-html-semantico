@@ -203,3 +203,23 @@ inputNombre.addEventListener("focus", actualizarTitulo);
 
 });
 
+// MODAL
+const modal = document.getElementById("modal");
+const modalMessage = document.getElementById("modal-message");
+const modalClose = document.getElementById("modal-close");
+
+function mostrarModal(titulo, mensaje) {
+  modalMessage.innerHTML = `<strong>${titulo}</strong><br><pre>${mensaje}</pre>`;
+  modal.style.display = "block";
+}
+
+
+modalClose.addEventListener("click", function () {
+  modal.style.display = "none";
+});
+
+window.addEventListener("click", function (e) {
+  if (e.target === modal) {
+    modal.style.display = "none";
+  }
+});
