@@ -147,4 +147,4 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("Errores en los siguientes campos:\n\n" + errores.join("\n"));
     }
   });
-});
+});  
