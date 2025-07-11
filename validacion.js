@@ -147,4 +147,25 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("Errores en los siguientes campos:\n\n" + errores.join("\n"));
     }
   });
-});  
+
+  // tiempo real 
+const tituloFormulario = document.getElementById("titulo-formulario");
+const inputNombre = document.getElementById("nombre");
+
+function actualizarTitulo() {
+  const nombreValor = inputNombre.value.trim();
+  if (nombreValor.length > 0) {
+    tituloFormulario.textContent = "HOLA " + nombreValor.toUpperCase();
+  } else {
+    tituloFormulario.textContent = "Suscribite al Diario";
+  }
+}
+
+inputNombre.addEventListener("keydown", () => {
+  setTimeout(actualizarTitulo, 0);
+});
+
+inputNombre.addEventListener("focus", actualizarTitulo);
+
+});
+
