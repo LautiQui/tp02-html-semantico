@@ -1,47 +1,34 @@
 .modal {
-  display: none;
+  display: none; /* oculto por defecto */
   position: fixed;
-  z-index: 9999;
+  z-index: 9999; /* bien arriba */
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-  animation: fadeIn 0.3s ease;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5); /* fondo oscuro semitransparente */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.show {
+  display: flex; /* visible y centrado */
 }
 
 .modal-content {
-  background-color: #fff;
-  margin: 10% auto;
-  padding: 20px 30px;
-  border: 1px solid #888;
-  border-radius: 10px;
-  width: 80%;
-  max-width: 500px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  animation: slideIn 0.4s ease;
+  background-color: white;
+  padding: 20px;
+  border-radius: 6px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  white-space: pre-wrap; /* para que el <pre> respete saltos */
 }
 
 .close {
-  color: #aaa;
-  float: right;
-  font-size: 26px;
-  font-weight: bold;
   cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideIn {
-  from { transform: translateY(-30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  font-size: 24px;
+  float: right;
 }

@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
       input: document.getElementById("edad"),
       error: document.getElementById("error-edad"),
       validar: function () {
-        const valor = parseInt(this.input.value.trim());
+        const valor = parseInt(this.input.value.trim(), 10);
         const valido = Number.isInteger(valor) && valor >= 18;
         this.setError(valido, "Debe ser mayor o igual a 18");
         return valido;
@@ -105,41 +105,73 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   };
 
-  // Métodos comunes
+  // Método para mostrar errores en cada campo
   for (const campo in campos) {
     campos[campo].setError = function (valido, mensaje) {
-      if (!valido) {
-        this.error.textContent = mensaje;
-      } else {
-        this.error.textContent = "";
-      }
+      this.error.textContent = valido ? "" : mensaje;
     };
-
-    campos[campo].input.addEventListener("blur", () => {
-      campos[campo].validar();
-    });
-
-    campos[campo].input.addEventListener("focus", () => {
-      campos[campo].error.textContent = "";
-    });
+    campos[campo].input.addEventListener("blur", () => campos[campo].validar());
+    campos[campo].input.addEventListener("focus", () => (campos[campo].error.textContent = ""));
   }
 
-  // Submit (API)
- 
-  form.addEventListener("submit", async function (e) {
-  e.preventDefault();
-  let errores = [];
+  // Modal - elementos
+  const modal = document.getElementById("modal");
+  const modalMessage = document.getElementById("modal-message");
+  const modalClose = document.getElementById("modal-close");
 
-  // Validar todos los campos
-  for (const campo in campos) {
-    const valido = campos[campo].validar();
-    if (!valido) {
-      errores.push(campo);
+  function mostrarModal(titulo, mensaje) {
+    modalMessage.innerHTML = `<strong>${titulo}</strong><br><pre>${mensaje}</pre>`;
+    modal.classList.add("show");
+  }
+
+  function ocultarModal() {
+    modal.classList.remove("show");
+  }
+
+  modalClose.addEventListener("click", ocultarModal);
+  window.addEventListener("click", e => {
+    if (e.target === modal) ocultarModal();
+  });
+
+  // Función para rellenar el formulario desde datos guardados
+  function cargarDatos(datos) {
+    for (const campo in campos) {
+      if (datos[campo]) {
+        campos[campo].input.value = datos[campo];
+      }
     }
   }
 
-  if (errores.length === 0) {
-    // Construir objeto con los datos del formulario para enviar
+  // Cargar datos desde LocalStorage si existen (pero sin mostrar modal)
+  const datosGuardados = localStorage.getItem("datosRespuesta");
+  if (datosGuardados) {
+    try {
+      const datos = JSON.parse(datosGuardados);
+      cargarDatos(datos);
+    } catch {
+      // si falla el parseo, ignorar
+    }
+  }
+
+  // Envío del formulario
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    let errores = [];
+
+    for (const campo in campos) {
+      if (!campos[campo].validar()) errores.push(campo);
+    }
+
+    if (errores.length > 0) {
+      mostrarModal(
+        "Errores en el formulario",
+        "Por favor corregí los siguientes campos:\n" + errores.join("\n")
+      );
+      return; // no seguir con el envío
+    }
+
+    // Si pasa validación
     const datosEnviar = {};
     for (const campo in campos) {
       datosEnviar[campo] = campos[campo].input.value.trim();
@@ -148,78 +180,42 @@ document.addEventListener("DOMContentLoaded", function () {
     try {
       const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(datosEnviar),
       });
 
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
       const datosRespuesta = await response.json();
 
-      // Mostrar modal con éxito y datos de respuesta
       mostrarModal(
         "Éxito",
-        "Formulario enviado correctamente.\nRespuesta del servidor:\n" + JSON.stringify(datosRespuesta, null, 2)
+        "Formulario enviado correctamente.\nRespuesta del servidor:\n" +
+          JSON.stringify(datosRespuesta, null, 2)
       );
 
       // Guardar datos recibidos en LocalStorage
       localStorage.setItem("datosRespuesta", JSON.stringify(datosRespuesta));
 
-      // Resetear formulario
       form.reset();
 
     } catch (error) {
-      // Mostrar modal con error
       mostrarModal("Error", "No se pudo enviar el formulario.\nDetalles: " + error.message);
     }
-  } else {
-    alert("Errores en los siguientes campos:\n\n" + errores.join("\n"));
-  }
+  });
 });
-
-
-  // tiempo real 
+// tiempo real 
 const tituloFormulario = document.getElementById("titulo-formulario");
 const inputNombre = document.getElementById("nombre");
 
 function actualizarTitulo() {
   const nombreValor = inputNombre.value.trim();
-  if (nombreValor.length > 0) {
-    tituloFormulario.textContent = "HOLA " + nombreValor.toUpperCase();
-  } else {
-    tituloFormulario.textContent = "Suscribite al Diario";
-  }
+  tituloFormulario.textContent =
+    nombreValor.length > 0
+      ? "HOLA " + nombreValor.toUpperCase()
+      : "Suscribite al Diario";
 }
 
-inputNombre.addEventListener("keydown", () => {
-  setTimeout(actualizarTitulo, 0);
-});
-
+// Agregar eventos
+inputNombre.addEventListener("input", actualizarTitulo);  // mejor que keydown + setTimeout
 inputNombre.addEventListener("focus", actualizarTitulo);
-
-});
-
-// MODAL
-const modal = document.getElementById("modal");
-const modalMessage = document.getElementById("modal-message");
-const modalClose = document.getElementById("modal-close");
-
-function mostrarModal(titulo, mensaje) {
-  modalMessage.innerHTML = `<strong>${titulo}</strong><br><pre>${mensaje}</pre>`;
-  modal.style.display = "block";
-}
-
-
-modalClose.addEventListener("click", function () {
-  modal.style.display = "none";
-});
-
-window.addEventListener("click", function (e) {
-  if (e.target === modal) {
-    modal.style.display = "none";
-  }
-});
