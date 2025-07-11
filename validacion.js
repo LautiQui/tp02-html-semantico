@@ -124,29 +124,63 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Submit
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    let errores = [];
+  // Submit (API)
+ 
+  form.addEventListener("submit", async function (e) {
+  e.preventDefault();
+  let errores = [];
 
+  // Validar todos los campos
+  for (const campo in campos) {
+    const valido = campos[campo].validar();
+    if (!valido) {
+      errores.push(campo);
+    }
+  }
+
+  if (errores.length === 0) {
+    // Construir objeto con los datos del formulario para enviar
+    const datosEnviar = {};
     for (const campo in campos) {
-      const valido = campos[campo].validar();
-      if (!valido) {
-        errores.push(campo);
+      datosEnviar[campo] = campos[campo].input.value.trim();
+    }
+
+    try {
+      const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datosEnviar),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error HTTP: ${response.status}`);
       }
-    }
 
-    if (errores.length === 0) {
-      const datos = Object.entries(campos)
-        .map(([clave, campo]) => `${clave}: ${campo.input.value.trim()}`)
-        .join("\n");
+      const datosRespuesta = await response.json();
 
-      alert("Formulario enviado correctamente:\n\n" + datos);
+      // Mostrar modal con éxito y datos de respuesta
+      mostrarModal(
+        "Éxito",
+        "Formulario enviado correctamente.\nRespuesta del servidor:\n" + JSON.stringify(datosRespuesta, null, 2)
+      );
+
+      // Guardar datos recibidos en LocalStorage
+      localStorage.setItem("datosRespuesta", JSON.stringify(datosRespuesta));
+
+      // Resetear formulario
       form.reset();
-    } else {
-      alert("Errores en los siguientes campos:\n\n" + errores.join("\n"));
+
+    } catch (error) {
+      // Mostrar modal con error
+      mostrarModal("Error", "No se pudo enviar el formulario.\nDetalles: " + error.message);
     }
-  });
+  } else {
+    alert("Errores en los siguientes campos:\n\n" + errores.join("\n"));
+  }
+});
+
 
   // tiempo real 
 const tituloFormulario = document.getElementById("titulo-formulario");
